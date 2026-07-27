@@ -1,18 +1,15 @@
-# plan-with-files-omo-slim-general
+# planning-with-files-omo-slim-general
 
 ## 简介
 
 利用文档 + OMO-slim 进行开发规划的工作流 skill。
-
 借鉴于 [planning-with-files](https://github.com/OthmanAdi/planning-with-files/)
-
 目前仅适用于 [oh-my-opencode-slim](https://github.com/alvinunreal/oh-my-opencode-slim)
-
 根据一个个人的项目开发不断调优得来
 
 ## skill 特点
 
-* 人类工程师对于 Agent 的行为高度可控
+* 人类工程师高自主权
 * 省 token（也许？）
 
 ## 前置依赖
