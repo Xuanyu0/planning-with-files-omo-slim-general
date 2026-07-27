@@ -35,15 +35,15 @@ description: "为复杂任务搭建的 skill。适用场景：根据用户本意
 
 例子：
 ```markdown
-docs/开发文档/P2开发文档/
+docs/开发文档/<阶段名>/
 ├── 00-总纲.md
 ├── 步骤/
-│   └── 04-{具体步骤名}.md          ← 步骤文档
+│   └── 04-<步骤名>.md          ← 步骤文档
 ├── 发现/
-│   └── 04-{具体步骤名}.md          ← 发现文档（文件名与步骤文档相同）
+│   └── 04-<步骤名>.md          ← 发现文档（文件名与步骤文档相同）
 └── 提示词/
-    └── 04-{具体步骤名}/
-        └── 4.6-{提示词核心内容}.md     ← 提示词文档
+    └── 04-<步骤名>/
+        └── 4.6-<提示词名>.md     ← 提示词文档
 ```
 
 
@@ -216,7 +216,7 @@ subagent task 返回要求
 
 同一份 提示词 传给 @fixer 作为实现指令、传给 @oracle 作为审查契约。
 
-@fixer 和 @oracle 的返回值格式已通过项目级 append 提示词注入到各自 agent（`.opencode/oh-my-opencode-slim/fixer_append.md`、`oracle_append.md`），编排者只需关注接收后的处理流程：
+@fixer 和 @oracle 的返回值格式已通过项目级 append 提示词注入到各自 agent（`fixer_append.md`、`oracle_append.md`），编排者只需关注接收后的处理流程：
 
 编排者收到 @fixer 结果后：
 * 确认自检清单完整性（所有修复项均已打勾或说明未完成原因）
@@ -339,7 +339,7 @@ subagent task 返回要求
     1. 如果只定位到一个总纲文件，跳过询问用户这个阶段
     2. 如果用户没有进一步指令，向用户展示当前已有的总纲文件（如果没有，请告知用户应该怎么做；）
     3. 如果用户有进一步指令，根据指令推断需要使用的总纲文件，如果不确定找到了，如实告知
-4. 执行 `bash .opencode/skills/planning-with-files/scripts/dev-status.sh <总纲文件路径>` — 交叉验证步骤状态（活跃步骤、脏标记、待确认发现项）
+4. 执行 `bash .opencode/skills/planning-with-files-omo-slim-general/scripts/dev-status.sh <总纲文件路径>` — 交叉验证步骤状态（活跃步骤、脏标记、待确认发现项）
 5. 根据 dev-status.sh 输出的 `🔥` 步骤，read 对应的步骤文档和发现文档
 
 此序列确保：不用盲目遍历文件，先拿到全局视图，再精确 read 当前活跃的文件。
