@@ -39,7 +39,7 @@ cp -r <repo>/.opencode/skills/planning-with-files-omo-slim-general 你的项目/
 
 将 `.config/opencode/oh-my-opencode-slim.json` 的 simplifier 定义整合到你自己的 `~/.config/opencode/oh-my-opencode-slim.json` 中。
 
-### 3. Agent append 提示词（preset 配好后引入）
+### 3. Agent append 提示词
 
 #### 方式一：项目级配置
 
@@ -50,7 +50,7 @@ cp <repo>/.opencode/fixer_append.md 你的项目/.opencode/
 cp <repo>/.opencode/oracle_append.md 你的项目/.opencode/
 ```
 
-#### 方式二：全局配置（仅在对应 preset 激活时生效）
+#### 方式二：全局配置
 
 将 append 文件放入 `~/.config/opencode/oh-my-opencode-slim/` 下，所有使用该插件但无项目级覆盖的仓库都会生效。
 
@@ -59,18 +59,12 @@ cp <repo>/.opencode/fixer_append.md ~/.config/opencode/oh-my-opencode-slim/
 cp <repo>/.opencode/oracle_append.md ~/.config/opencode/oh-my-opencode-slim/
 ```
 
-如果你使用 preset（如 `mix`），也可以放进 preset 专属目录，仅在该 preset 激活时生效：
+**如果只想提示词在 `planning-with-files-omo-slim-general` preset 激活时生效**，也可以放进 preset 专属目录：
 
 ```bash
-cp <repo>/.opencode/fixer_append.md ~/.config/opencode/oh-my-opencode-slim/mix/
-cp <repo>/.opencode/oracle_append.md ~/.config/opencode/oh-my-opencode-slim/mix/
+cp <repo>/.opencode/fixer_append.md ~/.config/opencode/oh-my-opencode-slim/planning-with-files-omo-slim-general/
+cp <repo>/.opencode/oracle_append.md ~/.config/opencode/oh-my-opencode-slim/planning-with-files-omo-slim-general/
 ```
-
-查找优先级（从上到下递减）：
-1. 项目级 preset 专属（`<项目>/.opencode/oh-my-opencode-slim/<preset>/`）
-2. 项目级全局（`<项目>/.opencode/oh-my-opencode-slim/`）
-3. 用户级 preset 专属（`~/.config/opencode/oh-my-opencode-slim/<preset>/`）
-4. 用户级全局（`~/.config/opencode/oh-my-opencode-slim/`）
 
 ## 使用
 
