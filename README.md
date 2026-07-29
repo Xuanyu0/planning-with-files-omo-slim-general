@@ -9,7 +9,7 @@
 
 ## skill 特点
 
-* 人类工程师高自主权
+* 人类工程师对 AI Agents 高度可控
 * 省 token（也许？）
 
 ## 前置依赖
@@ -17,17 +17,15 @@
 - [OpenCode](https://github.com/alvinunreal/opencode) 已安装
 - [oh-my-opencode-slim](https://github.com/alvinunreal/oh-my-opencode-slim) 插件已安装并配置
 
-## 下载
+## 使用说明
 
-```bash
-git clone https://github.com/<你的用户名>/planning-with-files-omo-slim-general.git
-```
+以下过程以配置全局 preset 加上项目级 skill 为主要方式
 
-或者只复制需要的文件到你的项目。
+其他配置方式可以参考 [oh-my-opencode-slim](https://github.com/alvinunreal/oh-my-opencode-slim) 仓库
 
-## 安装
+### 安装
 
-### 1. Skill 文件
+#### 1. Skill 文件配置
 
 将 `.opencode/skills/planning-with-files-omo-slim-general/` 复制到你项目的 `.opencode/skills/` 下：
 
@@ -35,38 +33,20 @@ git clone https://github.com/<你的用户名>/planning-with-files-omo-slim-gene
 cp -r <repo>/.opencode/skills/planning-with-files-omo-slim-general 你的项目/.opencode/skills/
 ```
 
-### 2. OMO-slim 配置（设置preset）
+#### 2. OMO-slim 配置（设置preset）
 
 将 `.config/opencode/oh-my-opencode-slim.json` 的 simplifier 定义整合到你自己的 `~/.config/opencode/oh-my-opencode-slim.json` 中。
 
-### 3. Agent append 提示词
+#### 3. Agent append 提示词
 
-#### 方式一：项目级配置
-
-将 `.opencode/fixer_append.md` 和 `.opencode/oracle_append.md` 复制到你项目的 `.opencode/` 下，让 @fixer 和 @oracle 返回技能要求的结构化结果。
-
-```bash
-cp <repo>/.opencode/fixer_append.md 你的项目/.opencode/
-cp <repo>/.opencode/oracle_append.md 你的项目/.opencode/
-```
-
-#### 方式二：全局配置
-
-将 append 文件放入 `~/.config/opencode/oh-my-opencode-slim/` 下，所有使用该插件但无项目级覆盖的仓库都会生效。
-
-```bash
-cp <repo>/.opencode/fixer_append.md ~/.config/opencode/oh-my-opencode-slim/
-cp <repo>/.opencode/oracle_append.md ~/.config/opencode/oh-my-opencode-slim/
-```
-
-**如果只想提示词在 `planning-with-files-omo-slim-general` preset 激活时生效**，也可以放进 preset 专属目录：
+**如果只想提示词在 `planning-with-files-omo-slim-general` preset 激活时生效**，可以放进omo-slim下的 preset 专属目录：
 
 ```bash
 cp <repo>/.opencode/fixer_append.md ~/.config/opencode/oh-my-opencode-slim/planning-with-files-omo-slim-general/
 cp <repo>/.opencode/oracle_append.md ~/.config/opencode/oh-my-opencode-slim/planning-with-files-omo-slim-general/
 ```
 
-## 使用
+### 使用
 
 在 OpenCode 会话中触发此 skill：
 
@@ -76,9 +56,11 @@ cp <repo>/.opencode/oracle_append.md ~/.config/opencode/oh-my-opencode-slim/plan
    - "拆解步骤" / "划分阶段"
    - "按照工作流执行" / "用工作流"
 
-### skill 创建核心文件结构
+#### 使用 skill 创建的核心文件结构
 
-skill 激活后，在 `docs/开发文档/<阶段名>/` 下生成四类文件：
+skill 激活前，需要主动创建 `docs/开发文档/<阶段名>/` ，
+
+例如：
 
 ```
 docs/开发文档/<阶段名>/
@@ -86,13 +68,13 @@ docs/开发文档/<阶段名>/
 ├── 步骤/
 │   └── 01-<步骤名>.md      ← 步骤规划
 ├── 发现/
-│   └── 01-<步骤名>.md      ← 发现记录（bug、改进、不确定项）
+│   └── 01-<步骤名>.md      ← 发现记录
 └── 提示词/
     └── 01-<步骤名>/
         └── 1.1-<内容>.md   ← 执行契约
 ```
 
-### 典型工作流
+#### 典型工作流
 
 ```
 开发启动协议 → 用户指明方向 → 撰写步骤文档 → 用户确认
