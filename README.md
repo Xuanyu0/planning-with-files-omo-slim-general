@@ -35,15 +35,36 @@ cp -r <repo>/.opencode/skills/planning-with-files-omo-slim-general 你的项目/
 
 #### 2. OMO-slim 配置（设置preset）
 
-将 `.config/opencode/oh-my-opencode-slim.json` 的 simplifier 定义整合到你自己的 `~/.config/opencode/oh-my-opencode-slim.json` 中。
+将 `.config/opencode/oh-my-opencode-slim.json` 的 simplifier 定义整合到你自己的 `~/.config/opencode/oh-my-opencode-slim.json` 中，同时将 `.config/opencode/oh-my-opencode-slim/simplifier.md` 复制到 `~/.config/opencode/oh-my-opencode-slim/simplifier.md`。
 
 #### 3. Agent append 提示词
 
 **如果只想提示词在 `planning-with-files-omo-slim-general` preset 激活时生效**，可以放进omo-slim下的 preset 专属目录：
 
 ```bash
-cp <repo>/.opencode/fixer_append.md ~/.config/opencode/oh-my-opencode-slim/planning-with-files-omo-slim-general/
-cp <repo>/.opencode/oracle_append.md ~/.config/opencode/oh-my-opencode-slim/planning-with-files-omo-slim-general/
+cp <repo>/.config/opencode/planning-with-files-omo-slim-general/fixer_append.md ~/.config/opencode/oh-my-opencode-slim/planning-with-files-omo-slim-general/
+cp <repo>/.config/opencode/planning-with-files-omo-slim-general/oracle_append.md ~/.config/opencode/oh-my-opencode-slim/planning-with-files-omo-slim-general/
+```
+
+#### 4. 验证安装
+
+在目标项目根目录执行，按安装步骤逐一验证：
+
+```bash
+# Step 1: Skill 文件
+test -f .opencode/skills/planning-with-files-omo-slim-general/SKILL.md \
+  -a .opencode/skills/planning-with-files-omo-slim-general/scripts/dev-status.sh \
+  && echo "✅ Step 1: Skill 文件就绪" || echo "❌ Step 1: Skill 文件缺失"
+
+# Step 2: Simplifier 配置
+test -f ~/.config/opencode/oh-my-opencode-slim/simplifier.md \
+  && grep -q '"simplifier"' ~/.config/opencode/oh-my-opencode-slim.json \
+  && echo "✅ Step 2: Simplifier 配置就绪" || echo "❌ Step 2: Simplifier 配置缺失"
+
+# Step 3: Agent append 提示词
+test -f ~/.config/opencode/oh-my-opencode-slim/planning-with-files-omo-slim-general/fixer_append.md \
+  -a ~/.config/opencode/oh-my-opencode-slim/planning-with-files-omo-slim-general/oracle_append.md \
+  && echo "✅ Step 3: Append 提示词就绪" || echo "❌ Step 3: Append 提示词缺失"
 ```
 
 ### 使用
@@ -74,13 +95,10 @@ docs/开发文档/<阶段名>/
         └── 1.1-<内容>.md   ← 执行契约
 ```
 
-#### 典型工作流
+####  工作流
 
 ```
-开发启动协议 → 用户指明方向 → 撰写步骤文档 → 用户确认
-→ 撰写提示词文件 → 用户确认（可选） → 执行（@fixer/@designer）
-→ 简化（@simplifier，可选） → 验证（@oracle） → 更新文档
-→ 用户确认 → git commit
+启动 -> 探索方案 -> 规划 -> 执行与验证 -> 用户检查 -> 提交 -> Agent 反思
 ```
 
 详细 Skill 内容及其说明见 [.opencode/skills/planning-with-files-omo-slim-general/SKILL.md](.opencode/skills/planning-with-files-omo-slim-general/SKILL.md)。
