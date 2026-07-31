@@ -25,6 +25,14 @@
 
 ### 安装
 
+#### 获取仓库
+
+先克隆本仓库到本地，后续 `<repo>` 即仓库本地路径：
+
+```bash
+git clone git@github.com:Xuanyu0/planning-with-files-omo-slim-general.git
+```
+
 #### 一键安装 / 更新（推荐）
 
 仓库自带安装脚本，**安装与更新是同一命令**：
