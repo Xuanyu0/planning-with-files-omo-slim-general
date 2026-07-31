@@ -35,7 +35,7 @@ cp -r <repo>/.opencode/skills/planning-with-files-omo-slim-general 你的项目/
 
 #### 2. OMO-slim 配置（设置preset）
 
-将 `.config/opencode/oh-my-opencode-slim.json` 的 simplifier 定义整合到你自己的 `~/.config/opencode/oh-my-opencode-slim.json` 中，同时将 `.config/opencode/oh-my-opencode-slim/simplifier.md` 复制到 `~/.config/opencode/oh-my-opencode-slim/simplifier.md`。
+将 `.config/opencode/oh-my-opencode-slim.json` 的 cleaner 定义整合到你自己的 `~/.config/opencode/oh-my-opencode-slim.json` 中，同时将 `.config/opencode/oh-my-opencode-slim/cleaner.md` 复制到 `~/.config/opencode/oh-my-opencode-slim/cleaner.md`。
 
 #### 3. Agent append 提示词
 
@@ -56,9 +56,9 @@ test -f .opencode/skills/planning-with-files-omo-slim-general/SKILL.md \
   -a .opencode/skills/planning-with-files-omo-slim-general/scripts/dev-status.sh \
   && echo "✅ Step 1: Skill 文件就绪" || echo "❌ Step 1: Skill 文件缺失"
 
-# Step 2: Simplifier 配置
-test -f ~/.config/opencode/oh-my-opencode-slim/simplifier.md \
-  && grep -q '"simplifier"' ~/.config/opencode/oh-my-opencode-slim.json \
+# Step 2: Cleaner 配置
+test -f ~/.config/opencode/oh-my-opencode-slim/cleaner.md \
+  && grep -q '"cleaner"' ~/.config/opencode/oh-my-opencode-slim.json \
   && echo "✅ Step 2: Simplifier 配置就绪" || echo "❌ Step 2: Simplifier 配置缺失"
 
 # Step 3: Agent append 提示词

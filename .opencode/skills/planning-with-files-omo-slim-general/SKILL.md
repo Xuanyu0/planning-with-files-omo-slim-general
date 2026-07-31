@@ -189,7 +189,7 @@ docs/开发文档/<阶段名>/
   * 执行期间各 specialist 报告的发现由 @orchestrator 实时收集，执行/验证完成后统一写入发现文档
 * 简化
   * 操作对象：代码
-  * 执行者：@simplifier
+  * 执行者：@cleaner
   * 简化明确不通过 → 回@Orchestrator重新安排原有执行者（@fixer/@designer）执行
   * 不确定应不应该简化 → 向上报告
 * 验证

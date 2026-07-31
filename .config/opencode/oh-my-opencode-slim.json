@@ -2,15 +2,12 @@
   "$schema": "https://unpkg.com/oh-my-opencode-slim@latest/oh-my-opencode-slim.schema.json",
   "preset": "planning-with-files-omo-slim-general",
   "agents": {
-    "simplifier": {
+    "cleaner": {
       "model": "opencode-go/deepseek-v4-flash",
       "variant": "high",
       "skills": [],
       "mcps": [],
-      "permission": {
-        "edit": "deny"
-      },
-      "orchestratorPrompt": "@simplifier\n- Lane: 代码简化、质量审查、效率审计\n- Permissions: read_files\n- Role: 审查近期代码变更的复用性（重复代码、遗漏的工具复用）、质量（代码坏味道、泄露抽象）、效率（冗余工作、遗漏并发）。明确问题直接修复，不确定案例报告编排者。\n- **Delegate when:** @fixer/@designer 实现完成后、@oracle 验证前 • 代码疑似过度设计或有重复模式 • 想在最终验证前确保代码质量\n- **Don't delegate when:** 琐碎单行修改 • 无新增代码 • 已由 @oracle 审查过\n- **Rule of thumb:** 实现 → @simplifier 清理 → @oracle 审查。"
+      "orchestratorPrompt": "@cleaner\n- Lane: 代码简化、质量审查、效率审计\n- Permissions: read_files\n- Role: 审查近期代码变更的复用性（重复代码、遗漏的工具复用）、质量（代码坏味道、泄露抽象）、效率（冗余工作、遗漏并发）。明确问题直接修复，不确定案例报告编排者。\n- **Delegate when:** @fixer/@designer 实现完成后、@oracle 验证前 • 代码疑似过度设计或有重复模式 • 想在最终验证前确保代码质量\n- **Don't delegate when:** 琐碎单行修改 • 无新增代码 • 已由 @oracle 审查过\n- **Rule of thumb:** 实现 → @cleaner 清理 → @oracle 审查。"
     }
   },
   "presets": {
