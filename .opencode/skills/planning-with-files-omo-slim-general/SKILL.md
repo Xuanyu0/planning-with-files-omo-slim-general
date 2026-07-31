@@ -54,7 +54,7 @@ docs/开发文档/<阶段名>/
 
 * 定义：步骤文件的统领，阶段性对应的总纲文件
 * 功能：
-  * `dev-status.sh` 脚本用于对开发文档的定位与处理
+  * `dev-status.py` 脚本用于对开发文档的定位与处理
   * 人类对总体进度的把控
 
 ### 步骤文件
@@ -244,7 +244,7 @@ docs/开发文档/<阶段名>/
     1. 如果只定位到一个总纲文件，跳过询问用户这个阶段
     2. 如果用户没有进一步指令，向用户展示当前已有的总纲文件（如果没有，请告知用户应该怎么做；）
     3. 如果用户有进一步指令，根据指令推断需要使用的总纲文件，如果不确定找到了，如实告知
-4. 执行 `bash .opencode/skills/planning-with-files-omo-slim-general/scripts/dev-status.sh <总纲文件路径>` — 交叉验证步骤状态（活跃步骤、脏标记、待确认发现项）
-5. 根据 dev-status.sh 输出的 `🔥` 步骤，read 对应的步骤文档和发现文档
+4. 执行 `python3 .opencode/skills/planning-with-files-omo-slim-general/scripts/dev-status.py <总纲文件路径>` — 交叉验证步骤状态（活跃步骤、脏标记、待确认发现项）
+5. 根据 dev-status.py 输出的 `🔥` 步骤，read 对应的步骤文档和发现文档
 
 此序列确保：不用盲目遍历文件，先拿到全局视图，再精确 read 当前活跃的文件。
