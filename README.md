@@ -25,47 +25,30 @@
 
 ### 安装
 
-#### 1. Skill 文件配置
+#### 一键安装 / 更新（推荐）
 
-将 `.opencode/skills/planning-with-files-omo-slim-general/` 复制到你项目的 `.opencode/skills/` 下：
-
-```bash
-cp -r <repo>/.opencode/skills/planning-with-files-omo-slim-general 你的项目/.opencode/skills/
-```
-
-#### 2. OMO-slim 配置（设置preset）
-
-将 `.config/opencode/oh-my-opencode-slim.json` 的 cleaner 定义整合到你自己的 `~/.config/opencode/oh-my-opencode-slim.json` 中，同时将 `.config/opencode/oh-my-opencode-slim/cleaner.md` 复制到 `~/.config/opencode/oh-my-opencode-slim/cleaner.md`。
-
-#### 3. Agent append 提示词
-
-**如果只想提示词在 `planning-with-files-omo-slim-general` preset 激活时生效**，可以放进omo-slim下的 preset 专属目录：
+仓库自带安装脚本，**安装与更新是同一命令**：
 
 ```bash
-cp <repo>/.config/opencode/planning-with-files-omo-slim-general/fixer_append.md ~/.config/opencode/oh-my-opencode-slim/planning-with-files-omo-slim-general/
-cp <repo>/.config/opencode/planning-with-files-omo-slim-general/oracle_append.md ~/.config/opencode/oh-my-opencode-slim/planning-with-files-omo-slim-general/
+python3 <repo>/install.py <你的项目路径>
 ```
 
-#### 4. 验证安装
+- **安装**：首次运行即完成全部安装；目标项目路径不存在会自动创建
+- **更新**：重复运行同一命令即为更新（幂等，重跑安全）
+- 前置依赖见上文
 
-在目标项目根目录执行，按安装步骤逐一验证：
+**脚本行为**：
 
-```bash
-# Step 1: Skill 文件
-test -f .opencode/skills/planning-with-files-omo-slim-general/SKILL.md \
-  -a .opencode/skills/planning-with-files-omo-slim-general/scripts/dev-status.py \
-  && echo "✅ Step 1: Skill 文件就绪" || echo "❌ Step 1: Skill 文件缺失"
+1. 复制 skill 目录 → `<项目>/.opencode/skills/planning-with-files-omo-slim-general/`
+2. 合并全局配置 `~/.config/opencode/oh-my-opencode-slim.json`：
+   - 写入 `agents.cleaner` 与 `presets.planning-with-files-omo-slim-general`（覆盖式）
+   - 自动清理旧命名 `simplifier`（agent 定义与 `simplifier.md`）
+   - 覆盖前自动备份为 `oh-my-opencode-slim.json.bak`
+   - 保留你现有的顶层 `preset`；若未激活本 skill，会提示手动切换
+3. 复制 `cleaner.md` 与 fixer/oracle append 提示词到全局 preset 专属目录
+4. 逐项验证并输出 ✅ / ❌
 
-# Step 2: Cleaner 配置
-test -f ~/.config/opencode/oh-my-opencode-slim/cleaner.md \
-  && grep -q '"cleaner"' ~/.config/opencode/oh-my-opencode-slim.json \
-  && echo "✅ Step 2: Simplifier 配置就绪" || echo "❌ Step 2: Simplifier 配置缺失"
-
-# Step 3: Agent append 提示词
-test -f ~/.config/opencode/oh-my-opencode-slim/planning-with-files-omo-slim-general/fixer_append.md \
-  -a ~/.config/opencode/oh-my-opencode-slim/planning-with-files-omo-slim-general/oracle_append.md \
-  && echo "✅ Step 3: Append 提示词就绪" || echo "❌ Step 3: Append 提示词缺失"
-```
+> 若全局配置存在旧命名 `simplifier`，安装/更新时会被自动升级为 `cleaner`。
 
 ### 使用
 
