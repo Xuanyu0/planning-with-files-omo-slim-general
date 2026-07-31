@@ -53,7 +53,7 @@ cp <repo>/.config/opencode/planning-with-files-omo-slim-general/oracle_append.md
 ```bash
 # Step 1: Skill 文件
 test -f .opencode/skills/planning-with-files-omo-slim-general/SKILL.md \
-  -a .opencode/skills/planning-with-files-omo-slim-general/scripts/dev-status.sh \
+  -a .opencode/skills/planning-with-files-omo-slim-general/scripts/dev-status.py \
   && echo "✅ Step 1: Skill 文件就绪" || echo "❌ Step 1: Skill 文件缺失"
 
 # Step 2: Cleaner 配置

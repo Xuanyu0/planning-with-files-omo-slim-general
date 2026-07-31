@@ -2,9 +2,8 @@
 # -*- coding: utf-8 -*-
 """开发步骤状态检查脚本（Python 版）
 
-dev-status.sh 的等价移植，仅依赖 Python 标准库。
-与 bash 版唯一的刻意差异：找不到 "## 开发步骤" 标题时不解析任何步骤行
-（bash 版此场景下会从第 4 行继续，属意外行为）。
+仅依赖 Python 标准库。
+找不到 "## 开发步骤" 标题时不解析任何步骤行。
 
 功能：
     从总纲文档读取步骤列表，交叉验证步骤文件、提示词文件、发现文档，
@@ -16,7 +15,7 @@ dev-status.sh 的等价移植，仅依赖 Python 标准库。
 用法：python3 dev-status.py <总纲文件路径>
 例：  python3 dev-status.py docs/开发文档/P2开发文档/phase2b/00-总纲.md
 
-入口：总纲文件路径（命令行参数 $1 → OUTLINE）
+入口：总纲文件路径（命令行参数传入）
 其他所有文件位置通过 OUTLINE 推导：
     BASE/步骤/{文件名}.md    — 步骤文档（由总纲表格"文件"列的 Markdown 链接指向）
     BASE/提示词/{文件名}/    — 提示词目录，与同步骤的步骤文档同名，内含 .md 提示词文件
@@ -26,11 +25,10 @@ dev-status.sh 的等价移植，仅依赖 Python 标准库。
     编号  文件                状态  距今    信号
     ────  ──────────────────  ────  ──────  ────────
     01    some-step          ✅     3天前
-    02    another-step       🔨    今天    📄⚠1🔥
+    02    another-step       🔨    今天     ⚠1🔥
 
 信号列（可叠加）：
     🔥 — 活跃：步骤文件最近 2 天内修改过，且有提示词文件存在
-    📄 — 有提示词：该步骤对应的提示词目录下存在 .md 文件
     ⚠N — N 项待确认：发现文档中有 N 条状态为"⏳ 待确认"的条目
     💀 — 脏/搁置：步骤状态为 🔨（进行中），但超过 2 天未修改
 """
@@ -98,7 +96,7 @@ def render_table(header, rows, sep="  "):
 
 
 def count_prompts(prompt_dir):
-    """统计目录下 *.md 文件数（非递归，含隐藏文件，与 find -name '*.md' 一致）。"""
+    """统计目录下 *.md 文件数（非递归，含隐藏文件）。"""
     n = 0
     try:
         for e in os.scandir(prompt_dir):
@@ -181,9 +179,8 @@ def main():
     for row in rows_text:
         fields = row.split("|")
         num = fields[1].strip() if len(fields) > 1 else ""
-        # Markdown 链接 [文字](文件名.md)：取 ]( 之后到行末最后一个 ) 的内容。
-        # 与 bash 版的 sed 's/.*(//;s/).*//' 不同：后者遇含 ) 的文件名会截断
-        # （如 06-(修订)-测试.md → 修订）导致整行被跳过；此处完整提取。
+        # Markdown 链接 [文字](文件名.md)：取 ]( 之后到行末最后一个 ) 的内容，
+        # 含 ) 的文件名（如 06-(修订)-测试.md）也能完整提取。
         file_md = fields[2].strip() if len(fields) > 2 else ""
         m = re.search(r"\]\((.+)\)$", file_md)
         file = m.group(1) if m else ""
@@ -217,8 +214,6 @@ def main():
 
         # 2d. 信号列（信号间单空格分隔，无前导/尾随空格）
         parts = []
-        if ic > 0:
-            parts.append("📄")
         if pc > 0:
             parts.append(f"⚠ {pc}")
         if st == "🔨" and days > 2:
@@ -259,17 +254,10 @@ def main():
             m = re.match(r"^\d+", nm)
             nu = m.group(0) if m else ""
 
-            ic = 0
-            pdir = find_prompt_dir(base, nm)
-            if pdir:
-                ic = count_prompts(pdir)
             pc = count_pending(os.path.join(base, "发现", f"{nm}.md"))
 
-            # 游离步骤已筛选为 2 天内活跃（days<=2），按注释意图必带 🔥；
-            # 有提示词叠加 📄，有待确认叠加 ⚠N。
+            # 游离步骤已筛选为 2 天内活跃（days<=2），必带 🔥；有待确认叠加 ⚠N。
             parts = ["🔥"]
-            if ic > 0:
-                parts.append("📄")
             if pc > 0:
                 parts.append(f"⚠ {pc}")
             sig = " ".join(parts)
@@ -282,7 +270,7 @@ def main():
 
     # ── 5. 输出图例 ───────────────────────────────────────────────────────
     print("")
-    print("🔥 = 活跃 📄 = 有提示词 ⚠ N = N 项待确认 💀 = 脏(🔨 但超 2 日未改)")
+    print("🔥 = 活跃 ⚠ N = N 项待确认 💀 = 脏(🔨 但超 2 日未改)")
 
 
 if __name__ == "__main__":
