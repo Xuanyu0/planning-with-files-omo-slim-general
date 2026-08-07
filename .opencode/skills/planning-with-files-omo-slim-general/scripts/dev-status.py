@@ -183,7 +183,8 @@ def main():
         # 含 ) 的文件名（如 06-(修订)-测试.md）也能完整提取。
         file_md = fields[2].strip() if len(fields) > 2 else ""
         m = re.search(r"\]\((.+)\)$", file_md)
-        file = m.group(1) if m else ""
+        # 统一取 basename：兼容 "步骤/xxx.md" 与 "xxx.md" 两种总纲链接格式
+        file = os.path.basename(m.group(1)) if m else ""
         file_disp = file[:-3] if file.endswith(".md") else file
         st = fields[4].strip() if len(fields) > 4 else ""
         if not st:
